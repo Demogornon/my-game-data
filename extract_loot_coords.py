@@ -43,8 +43,13 @@ def main():
         for local_point in loot_points:
             lx, ly, lz = local_point
             
-            # Поворот локальных координат X и Z
-            rx, rz = rotate_point(lx, lz, angle)
+            # Поправка угла: в игре 0 градусов смотрит на север (ось Z+), 
+            # а стандартная математика - на восток (ось X+).
+            # Используем формулу: 90 - угол_здания
+            corrected_angle = 90.0 - angle
+            
+            # Поворот локальных координат X и Z с учетом поправки
+            rx, rz = rotate_point(lx, lz, corrected_angle)
             
             # Смещение к мировым координатам
             world_x = bx + rx
