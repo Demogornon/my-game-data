@@ -57,13 +57,14 @@ def main():
             world_z = bz + rz
             
             # Округляем до 6 знаков для корректного сравнения дубликатов и читаемости
-            point_key = (round(world_x, 6), round(world_y, 6), round(world_z, 6))
+            # Включаем угол здания в ключ уникальности, чтобы точки с разными углами считались разными
+            point_key = (round(world_x, 6), round(world_y, 6), round(world_z, 6), round(angle, 6))
             result_points.add(point_key)
     
-    # Конвертируем множество обратно в список списков с добавлением 4-го параметра (0)
+    # Конвертируем множество обратно в список списков
     final_result = []
-    for px, py, pz in result_points:
-        final_result.append([px, py, pz, 0])
+    for px, py, pz, p_angle in result_points:
+        final_result.append([px, py, pz, p_angle])
     
     # Сортировка для стабильности вывода
     final_result.sort(key=lambda p: (p[0], p[1], p[2]))
